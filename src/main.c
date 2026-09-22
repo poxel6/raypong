@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "ball.h"
+#include "bricks.h"
+#include "paddle.h"
+#include "vendor/raylib.h"
+
+int main(void) {
+    const int screenWidth = 1200;
+    const int screenHeight = 720;
+    const char* title = "Hello World";
+    InitWindow(screenWidth, screenHeight, title);
+
+    Paddle paddle = {
+        // clang-format off
+        .position = {
+			.x = (screenWidth / 2) - 50, 
+			.y = 600
+		},
+        .dimentions = {
+			.x = 100,                   
+			.y = 10
+		},
+        // clang-format on
+        .color = RED,
+    };
+
+    Ball ball = {
+        // clang-format off
+        .position = {
+			.x = screenWidth / 2,
+			.y = screenHeight / 2,
+		},
+        // clang-format on
+        .direction = DOWN,
+        .radius = 10,
+    };
+
+    Bricks bricks = new_bricks();
+    addn_brick(&bricks, 10);
+
+    while (!WindowShouldClose()) {
+        if (IsKeyDown(KEY_L)) {
+            paddle.position.x += 500 * GetFrameTime();
+        }
+        if (IsKeyDown(KEY_H)) {
+            paddle.position.x -= 500 * GetFrameTime();
+        }
+
+        switch (ball.direction) {
+        case UP: {
+            if (ball.position.y - ball.radius <= 0) {
+                ball.direction = DOWN;
+            }
+
+            if (ball_is_colliding(&ball, bricks)) {
+            }
+
+            ball.position.y -= GetFrameTime() * 200;
+            break;
+        }
+
+        case DOWN: {
+            float paddle_start = paddle.position.x - (paddle.dimentions.x / 2);
+            float paddle_end = paddle.position.x + (paddle.dimentions.x / 2);
+            bool collisionWithPaddle = (ball.position.x >= paddle_start &&
+                                        ball.position.x <= paddle_end) &&
+                                       ball.position.y + 10 >= 600;
+
+            if (collisionWithPaddle) {
+                ball.direction = UP;
+            }
+
+            ball.position.y += GetFrameTime() * 200;
+
+            break;
+        }
+        }
+
+        BeginDrawing();
+        {
+            ClearBackground(RAYWHITE);
+
+            DrawCircle(ball.position.x, ball.position.y, ball.radius, SKYBLUE);
+            DrawText("move the paddle with HJKL", 10, 10, 20, DARKGRAY);
+            draw_paddle(&paddle);
+            draw_bricks(&bricks);
+        }
+        EndDrawing();
+    }
+
+    return 0;
+}
