@@ -64,8 +64,8 @@ int main(void) {
         case DOWN: {
             float paddle_start = paddle.position.x - (paddle.dimentions.x / 2);
             float paddle_end = paddle.position.x + (paddle.dimentions.x / 2);
-            bool collisionWithPaddle = (ball.position.x >= paddle_start &&
-                                        ball.position.x <= paddle_end) &&
+            bool collisionWithPaddle = ((ball.position.x >= paddle_start ||
+                                         ball.position.x <= paddle_end)) &&
                                        ball.position.y + 10 >= 600;
 
             if (collisionWithPaddle) {
@@ -93,10 +93,10 @@ int main(void) {
 
                 };
                 if (CheckCollisionCircleRec(ball.position, ball.radius, rect)) {
-					ball.direction = DOWN;
+                    ball.direction = DOWN;
 
-					DrawText("COLLISION", 10, 10, 50, DARKGRAY);
-				}
+                    DrawText("COLLISION", 10, 10, 50, DARKGRAY);
+                }
             }
             draw_paddle(&paddle);
             draw_bricks(&bricks);
