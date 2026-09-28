@@ -84,6 +84,20 @@ int main(void) {
 
             DrawCircle(ball.position.x, ball.position.y, ball.radius, SKYBLUE);
             DrawText("move the paddle with HJKL", 10, 10, 20, DARKGRAY);
+            for (int i = 0; i < bricks.count; i++) {
+                Brick brick = bricks.brick[i];
+                Rectangle rect = (Rectangle){.width = brick.dimentions.x,
+                                             .height = brick.dimentions.y,
+                                             .x = brick.position.x,
+                                             .y = brick.position.y
+
+                };
+                if (CheckCollisionCircleRec(ball.position, ball.radius, rect)) {
+					ball.direction = DOWN;
+
+					DrawText("COLLISION", 10, 10, 50, DARKGRAY);
+				}
+            }
             draw_paddle(&paddle);
             draw_bricks(&bricks);
         }
