@@ -96,6 +96,8 @@ int main(void) {
                     ball.direction = DOWN;
 
                     DrawText("COLLISION", 10, 10, 50, DARKGRAY);
+					// TODO: it only check for collision with one of the rectangles
+					brick_pop(&bricks, brick.id);
                 }
             }
             draw_paddle(&paddle);
