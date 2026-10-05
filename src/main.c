@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -43,9 +44,11 @@ int main(void) {
     while (!WindowShouldClose()) {
         if (IsKeyDown(KEY_L)) {
             paddle.position.x += 500 * GetFrameTime();
+            paddle.direction = RIGHT;
         }
         if (IsKeyDown(KEY_H)) {
             paddle.position.x -= 500 * GetFrameTime();
+            paddle.direction = LEFT;
         }
 
         switch (ball.direction) {
@@ -54,10 +57,15 @@ int main(void) {
                 ball.direction = DOWN;
             }
 
-            if (ball_is_colliding(&ball, bricks)) {
-            }
-
             ball.position.y -= GetFrameTime() * 200;
+            switch (paddle.direction) {
+            case LEFT:
+                ball.position.x += GetFrameTime() * 200;
+                break;
+            case RIGHT:
+                ball.position.x -= GetFrameTime() * 200;
+                break;
+            }
             break;
         }
 
@@ -96,8 +104,9 @@ int main(void) {
                     ball.direction = DOWN;
 
                     DrawText("COLLISION", 10, 10, 50, DARKGRAY);
-					// TODO: it only check for collision with one of the rectangles
-					brick_pop(&bricks, brick.id);
+                    // TODO: it only check for collision with one of the
+                    // rectangles
+                    brick_pop(&bricks, brick.id);
                 }
             }
             draw_paddle(&paddle);

@@ -13,5 +13,3 @@ typedef struct {
   float velocity;
   BallDirection direction;
 } Ball;
-
-bool ball_is_colliding(Ball *ball, Bricks bricks);
