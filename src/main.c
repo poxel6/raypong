@@ -1,3 +1,8 @@
+// TODO: paddle collision is fucked up
+// TODO: when ball collisides with bricks from sides it doesn't change side direction
+// TODO: code is a fucking mess
+#include "main.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,9 +12,26 @@
 #include "paddle.h"
 #include "vendor/raylib.h"
 
+#define WIDTH 1200
+#define HEIGHT 720
+
+static void checkWallCollision(Ball* ball) {
+    if (ball->position.x - ball->radius < 0 ||
+        ball->position.x + ball->radius > WIDTH) {
+        switch (ball->sideDirection) {
+        case RIGHT:
+            ball->sideDirection = LEFT;
+            break;
+        case LEFT:
+            ball->sideDirection = RIGHT;
+            break;
+        }
+    }
+}
+
 int main(void) {
-    const int screenWidth = 1200;
-    const int screenHeight = 720;
+    const int screenWidth = WIDTH;
+    const int screenHeight = HEIGHT;
     const char* title = "Hello World";
     InitWindow(screenWidth, screenHeight, title);
 
@@ -36,6 +58,7 @@ int main(void) {
         // clang-format on
         .direction = DOWN,
         .radius = 10,
+        .sideDirection = (SideDirection)paddle.direction
     };
 
     Bricks bricks = new_bricks();
@@ -51,6 +74,8 @@ int main(void) {
             paddle.direction = LEFT;
         }
 
+        checkWallCollision(&ball);
+
         switch (ball.direction) {
         case UP: {
             if (ball.position.y - ball.radius <= 0) {
@@ -58,14 +83,6 @@ int main(void) {
             }
 
             ball.position.y -= GetFrameTime() * 200;
-            switch (paddle.direction) {
-            case LEFT:
-                ball.position.x += GetFrameTime() * 200;
-                break;
-            case RIGHT:
-                ball.position.x -= GetFrameTime() * 200;
-                break;
-            }
             break;
         }
 
@@ -84,6 +101,15 @@ int main(void) {
 
             break;
         }
+        }
+
+        switch (ball.sideDirection) {
+        case LEFT:
+            ball.position.x += GetFrameTime() * 200;
+            break;
+        case RIGHT:
+            ball.position.x -= GetFrameTime() * 200;
+            break;
         }
 
         BeginDrawing();

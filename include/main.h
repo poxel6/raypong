@@ -2,6 +2,8 @@
 
 #include <stdint.h>
 
+typedef enum { RIGHT, LEFT } SideDirection;
+
 typedef struct {
   int32_t x, y;
 } IntVector2;

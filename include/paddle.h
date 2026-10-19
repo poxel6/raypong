@@ -3,13 +3,11 @@
 #include "main.h"
 #include "vendor/raylib.h"
 
-typedef enum { LEFT, RIGHT } PaddleDirection;
-
 typedef struct {
   Vector2 position;
   Color color;
   Dimention dimentions;
-  PaddleDirection direction;
+  SideDirection direction;
 } Paddle;
 
 void draw_paddle(Paddle *paddle);

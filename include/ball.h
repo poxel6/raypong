@@ -12,4 +12,5 @@ typedef struct {
   Vector2 position;
   float velocity;
   BallDirection direction;
+  SideDirection sideDirection;
 } Ball;
