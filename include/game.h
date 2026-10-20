@@ -18,3 +18,4 @@ typedef struct {
 
 void draw_game_screen(GameContext *ctx);
 GameContext new_game();
+void game_tick(GameContext* ctx);

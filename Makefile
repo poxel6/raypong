@@ -20,12 +20,14 @@ RELEASE_CFLAGS = $(CFLAGS) -O$(OLVL) -DNDEBUG
 
 DEBUG_OBJS = \
 	$(DEBUG_OBJ_DIR)/main.o \
+	$(DEBUG_OBJ_DIR)/game.o \
 	$(DEBUG_OBJ_DIR)/paddle.o \
 	$(DEBUG_OBJ_DIR)/ball.o \
 	$(DEBUG_OBJ_DIR)/bricks.o
 
 RELEASE_OBJS = \
 	$(RELEASE_OBJ_DIR)/main.o \
+	$(RELEASE_OBJ_DIR)/game.o \
 	$(RELEASE_OBJ_DIR)/paddle.o \
 	$(RELEASE_OBJ_DIR)/ball.o \
 	$(RELEASE_OBJ_DIR)/bricks.o
