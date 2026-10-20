@@ -9,21 +9,22 @@
 #define OFFSET 6
 
 typedef struct {
-	int id;
-	int health;
-	Color color;
-	Vector2 position;
-	Dimention dimentions;
+  int id;
+  int health;
+  Color color;
+  Vector2 position;
+  Dimention dimentions;
 } Brick;
 
-typedef struct {
-	Brick brick[MAX_BRICKS];
-	int count;
+typedef struct Bricks {
+  Brick brick[MAX_BRICKS];
+  int count;
 } Bricks;
 
-void draw_bricks(Bricks* bricks);
+void draw_bricks(Bricks *bricks);
 Brick new_brick();
 Bricks new_bricks();
-void add_brick(Bricks* bricks);
-void addn_brick(Bricks* bricks, int number);
-Brick brick_pop(Bricks* bricks, int index);
+void add_brick(Bricks *bricks);
+void addn_brick(Bricks *bricks, int number);
+Brick brick_pop(Bricks *bricks, int index);
+Rectangle brick_as_rectangle(Brick *brick);

@@ -1,7 +1,8 @@
 #include "bricks.h"
 
-#include "vendor/raylib.h"
 #include <stdint.h>
+
+#include "vendor/raylib.h"
 
 static int brick_count = 0;
 static uint8_t id_counter = 0;
@@ -16,16 +17,16 @@ static void draw_brick(Brick* brick) {
 
 void draw_bricks(Bricks* bricks) {
     for (int i = 0; i < bricks->count; i++) {
-		if (bricks->brick[i].id == -1) {
-			continue;
-		}
+        if (bricks->brick[i].id == -1) {
+            continue;
+        }
         draw_brick(&bricks->brick[i]);
     }
 }
 
 Brick new_brick() {
     Brick brick = {
-		.id = id_counter++,
+        .id = id_counter++,
         // clang-format off
     	.position = {
 			.x = (float) (BRICK_SIZE * (OFFSET + brick_count )),
@@ -63,9 +64,18 @@ void addn_brick(Bricks* bricks, int number) {
 }
 
 Brick brick_pop(Bricks* bricks, int id) {
-	for (int i = 0; i < bricks->count; i++) {
-		if (bricks->brick[i].id == id) {
-			bricks->brick[i].id = -1;
-		}
-	}
+    for (int i = 0; i < bricks->count; i++) {
+        if (bricks->brick[i].id == id) {
+            bricks->brick[i].id = -1;
+        }
+    }
+}
+
+Rectangle brick_as_rectangle(Brick* brick) {
+    Rectangle rect = (Rectangle){.width = brick->dimentions.x,
+                                 .height = brick->dimentions.y,
+                                 .x = brick->position.x,
+                                 .y = brick->position.y};
+
+    return rect;
 }

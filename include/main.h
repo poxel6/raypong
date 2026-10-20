@@ -1,8 +1,14 @@
 #pragma once
 
+#include "vendor/raylib.h"
 #include <stdint.h>
 
-typedef enum { RIGHT, LEFT } SideDirection;
+#define WIDTH 1200
+#define HEIGHT 720
+
+typedef enum : bool { RIGHT, LEFT } HorizontalDirection;
+typedef enum : bool { UP, DOWN } VerticalDirection;
+typedef enum { WELCOME, PLAYING, GAMEOVER } GameState;
 
 typedef struct {
   int32_t x, y;
