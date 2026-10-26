@@ -10,6 +10,7 @@ typedef struct Ball {
   uint8_t radius;
   Vector2 position;
   float velocity;
+  bool start_state;
   VerticalDirection verticalDirection;
   HorizontalDirection sideDirection;
 } Ball;

@@ -26,6 +26,7 @@ GameContext new_game() {
     Paddle paddle = new_paddle();
     Ball ball = new_ball(&paddle);
     Bricks bricks = new_bricks();
+    ball.start_state = true;
     addn_brick(&bricks, 10);
 
     // clang-format off
@@ -78,6 +79,7 @@ void game_tick(GameContext* ctx) {
 
         if (collisionWithPaddle) {
             ctx->ball.verticalDirection = UP;
+            ctx->ball.start_state = false;
             switch (ctx->paddle.direction) {
             case RIGHT:
                 ctx->ball.sideDirection = LEFT;
@@ -94,12 +96,14 @@ void game_tick(GameContext* ctx) {
     }
     }
 
-    switch (ctx->ball.sideDirection) {
-    case LEFT:
-        ctx->ball.position.x += GetFrameTime() * (150 + (rand() % 50));
-        break;
-    case RIGHT:
-        ctx->ball.position.x -= GetFrameTime() * (150 + (rand() % 50));
-        break;
+    if (!ctx->ball.start_state) {
+        switch (ctx->ball.sideDirection) {
+        case LEFT:
+            ctx->ball.position.x += GetFrameTime() * (150 + (rand() % 50));
+            break;
+        case RIGHT:
+            ctx->ball.position.x -= GetFrameTime() * (150 + (rand() % 50));
+            break;
+        }
     }
 }

@@ -37,6 +37,7 @@ Ball new_ball(Paddle* paddle) {
 			.y = (HEIGHT) / 2,
 		},
         // clang-format on
+		.start_state = true,
         .verticalDirection = DOWN,
         .radius = 10,
         .sideDirection = (HorizontalDirection)paddle->direction
